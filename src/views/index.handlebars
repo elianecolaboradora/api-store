@@ -1,0 +1,12 @@
+<h1>Mis productos</h1>
+<p> Crear una vista “index.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento </p>
+
+<div class="contenedorCards">
+    {{#each products}}
+        <div class="card">
+            <p>Producto: {{this.title}} </p>
+            <p>Descripción {{this.description}} </p>
+            <p>Precio: {{this.price}} </p>
+        </div>
+    {{/each}}
+</div>

@@ -7,13 +7,16 @@
     "dev": "node --watch src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eliane Rivera",
   "license": "ISC",
   "description": "",
   "engines": {
     "node": "~20.15.0"
   },
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "express-handlebars": "^8.0.1",
+    "socket.io": "^4.8.0",
+    "socket.io-client": "^4.8.0"
   }
 }

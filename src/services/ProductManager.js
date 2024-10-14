@@ -17,7 +17,7 @@ export class ProductManager {
             const productsParse = JSON.parse(productsJson);
             this.products = productsParse || [];
             return this.products;
-    
+
         } catch (error) {
 
             console.log(`Error: ${error}`);
@@ -47,7 +47,9 @@ export class ProductManager {
             const valuesNewProduct = Object.values(newProduct)
             if (valuesNewProduct.includes(undefined)) throw new Error("Todos los datos son obligatorios");
 
-            newProduct.id = this.products.length + 1
+            const generateId = () => Date.now().toString(35) + Math.random().toString(36).slice(2)
+            /* newProduct.id = this.products.length + 1 */
+            newProduct.id = generateId()
 
             this.products.push(newProduct);
             await this.saveFile()
