@@ -22,10 +22,10 @@ function deleteProduct(btns,card) {
 }
 btnAddProduct.addEventListener("click", ()=>{
 
-
-    if(!nameProduct.value || !description.value || !price.value || !code.value || !stock.value){
-        alert("completa todos los campos para agregar el producto")
-    }else{
+    if(!nameProduct.value || !description.value || !price.value || !code.value || !stock.value) alert("completa todos los campos para agregar el producto")
+    else if (price.value <= 0 ) alert("Ingresa el precio, que no sean numero negativos")
+    else if(stock.value <= 0 ) alert("Ingresa cuantos productos hay, que no sean numero negativos")
+    else{
 
         socket.emit("newProduct", {
             title: nameProduct.value,

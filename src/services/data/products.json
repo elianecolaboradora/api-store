@@ -88,5 +88,32 @@
         "img": "sin imagen",
         "code": "aaa558",
         "stock": 300
+    },
+    {
+        "title": "errt",
+        "description": "12323",
+        "price": "2",
+        "img": "no hay imagen",
+        "code": "3445",
+        "stock": "4",
+        "id": "qv66xbgcwa84q9z3oo9"
+    },
+    {
+        "title": "erere",
+        "description": "rer",
+        "price": "10",
+        "img": "no hay imagen",
+        "code": "12wd34f",
+        "stock": "12",
+        "id": "qv67hfdxtmje09685u"
+    },
+    {
+        "title": "Azucar",
+        "description": "panela",
+        "price": 10,
+        "img": "sin imagen",
+        "code": "2384hdkp",
+        "stock": 10,
+        "id": "qvdjn0832akona9ktp5"
     }
 ]

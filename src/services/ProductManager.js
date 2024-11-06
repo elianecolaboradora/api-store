@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-
+import { ProductModel } from "../models/product.model.js";
 const __dirname = import.meta.dirname;
 
 export class ProductManager {
@@ -10,6 +10,66 @@ export class ProductManager {
     async saveFile() {
         await fs.writeFile(this.path, JSON.stringify(this.products));
     }
+    async getProductsFT({ limit = 10, page = 1, sort, query }) {
+        try {
+
+            const filter = query
+            ?
+            {
+                $or: [
+                    { status: query },
+                    { category: query }
+                ]
+            }
+            : {};
+
+            const sortOption = sort === 'asc' ? 1 : sort === 'desc' ? -1 : null;
+            const productsQuery = ProductModel.find(filter).lean();
+
+            if (sortOption) productsQuery.sort({ price: sortOption })
+
+            const products = await productsQuery
+                .limit(limit)
+                .skip((page - 1) * limit)
+                .exec();
+
+            function createURL(prevOrNext) {
+                let URL =`/products?limit=${limit}&page=${prevOrNext}`
+                if(!sort && !query) URL
+                else if(!sort) URL + `&query=${query}`
+                else if(!query) URL + `&sort=${sort}`
+                else URL + `&sort=${sort}&query=${query}`
+                return URL
+            }
+
+            const totalProducts = await ProductModel.countDocuments(filter);
+            const totalPages = Math.ceil(totalProducts / limit);
+            const hasPrevPage = page > 1;
+            const hasNextPage = page < totalPages;
+            const prevPage = hasPrevPage ? page - 1 : null;
+            const nextPage = hasNextPage ? page + 1 : null;
+            const prevLink = hasPrevPage ? createURL(prevPage) : null;
+            const nextLink = hasNextPage ? createURL(nextPage) : null;
+
+            return {
+                status: 'success',
+                payload: products,
+                totalPages,
+                prevPage,
+                nextPage,
+                page,
+                hasPrevPage,
+                hasNextPage,
+                prevLink,
+                nextLink
+            };
+
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error al obtener productos: ${error.message}`);
+        }
+    }
+
     async getProducts(){
         try {
 
@@ -24,6 +84,7 @@ export class ProductManager {
 
         }
     }
+    // file -----------------------------------------
     async getProductById(idProduct){
         try {
 
@@ -37,6 +98,17 @@ export class ProductManager {
         }
 
     }
+    // DB -------------------------------------------
+    async getProductByIdFT(idProduct){
+        try {
+            return await ProductModel.findById(idProduct).lean()
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    // file -----------------------------------------
     async addProduct(newProduct){
         try{
             await this.getProducts();
@@ -55,6 +127,29 @@ export class ProductManager {
             await this.saveFile()
 
             return this.products;
+        }catch(error){
+            console.log(error)
+        }
+
+    }
+    // DB -------------------------------------------
+    async addProductFT(newProduct){
+        try{
+            const filter = {
+                $or:[
+                    { code: newProduct.code },
+                ]
+            }
+
+            const theProductExists = ProductModel.find(filter)
+            if(theProductExists)  throw new Error(`ya exite ese producto`)
+
+            const keysProduct = ["title", "description", "price", "img", "code", "stock", "category", "status"]
+            const keysNewProduct = Object.keys(newProduct)
+            if(!JSON.stringify(keysProduct) == JSON.stringify(keysNewProduct)) throw new Error("Todos los datos son obligatorios")
+
+            return await ProductModel.create(newProduct)
+
         }catch(error){
             console.log(error)
         }

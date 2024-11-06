@@ -5,6 +5,9 @@ import { createServer } from 'node:http';
 import path from "node:path";
 import { httpServerIo } from "./realtimeServer.js";
 import { viewsRouter } from "./routes/views.router.js";
+import "./dataBase.js"
+
+
 const __dirname = import.meta.dirname;
 
 const app = express()
@@ -25,8 +28,5 @@ app.set("views", path.join(__dirname, "views"));
 httpServer.listen(PORT, () => {
     console.log('Mi port ' + PORT);
 });
-/* app.listen(PORT, () => {
-    console.log('Mi port ' + PORT);
-}); */
 
 httpServerIo(httpServer)

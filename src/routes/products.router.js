@@ -4,6 +4,7 @@ import {ProductManager} from "../services/ProductManager.js"
 const productsRouter = Router()
 const productsManager = new ProductManager();
 
+//----- router view
 productsRouter.get("/", async (request, response) => {
 
     try{
@@ -21,6 +22,8 @@ productsRouter.get("/", async (request, response) => {
     }
 
 });
+
+//----- router view
 productsRouter.get("/:pid", async (request, response) => {
 
     try{
@@ -36,6 +39,8 @@ productsRouter.get("/:pid", async (request, response) => {
     }
 
 });
+
+// ---------------------------
 productsRouter.post("/", async (request, response) => {
 
     try {
