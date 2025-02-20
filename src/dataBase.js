@@ -1,5 +1,5 @@
-/* process.loadEnvFile(".env") */
-process.loadEnvFile(".envexample")
+process.loadEnvFile(".env")
+/* process.loadEnvFile(".envexample") */
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI
