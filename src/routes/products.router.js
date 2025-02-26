@@ -44,38 +44,36 @@ productsRouter.get("/:pid", async (request, response) => {
 productsRouter.post("/", async (request, response) => {
 
     try {
-        const newProduct = request.body
-        const productoguaradado = await productsManager.addProduct(newProduct);
-        if(productoguaradado) response.status(201).json("Producto agregado exitosamente")
-        else throw new Error(error.messaje)
+        const newProduct = request.body;
+        const savedProduct = await productsManager.addProductFT(newProduct);
+        response.status(201).json({ message: "Product successfully added", product: savedProduct });
     } catch (error) {
-        response.status(500).send("No se puede agregar este producto"); 
+        response.status(409).json({ error: error.message });
     }
+
 });
+
 productsRouter.put("/:pid", async (request, response) => {
 
     try {
         const { pid } = request.params
         const body = request.body
-        const productToUpdate = await productsManager.updateProduct(body, pid);
-        response.json(productToUpdate)
+        const productToUpdate = await productsManager.updateProductFT(pid, body );
+        response.status(201).json({ message: "product successfully upgraded", product: productToUpdate });
 
     } catch (error) {
-        response.status(500).send("No se puede agregar este producto"); 
+        response.status(500).send("This product cannot be added"); 
     }
 });
+
 productsRouter.delete("/:pid", async (request, response) => {
-
+    const { pid } = request.params;
+    
     try {
-        const { pid } = request.params
-        const productToDelete = await productsManager.delateProduct(pid);
-        response.json({
-            messaje:"Producto eliminado",
-            deletedData: productToDelete
-        })
-
+        const deletedProduct = await productsManager.deleteProductFT(pid);
+        response.status(200).json({ message: "Product deleted", deletedProduct });
     } catch (error) {
-        response.status(500).send("No se puede eliminar este producto este producto"); 
+        response.status(500).json({ error: "Error deleting product" });
     }
 });
 

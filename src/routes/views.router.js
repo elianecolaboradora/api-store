@@ -1,6 +1,4 @@
-import mongoose from "mongoose"
 import { Router } from "express";
-import { ProductModel } from "../models/product.model.js";
 import { ProductManager } from "../services/ProductManager.js";
 
 const viewsRouter = Router()

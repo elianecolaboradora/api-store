@@ -34,11 +34,19 @@ cartRouter.get("/:cid", async (request, response) => {
 cartRouter.post("/", async (request, response) => {
 
     try {
-        const productoguaradado = await cartManager.addCartFT();
-        if(productoguaradado) response.status(201).send(productoguaradado._id.toString())
+        const { user_id } = request.body;
+        console.log("Received user_id:", user_id);
+        if (!user_id) {
+            return response.status(400).json({ error: "user_id es requerido" });
+        }
+
+        const productoguaradado = await cartManager.addCartFT(user_id);
+        if(productoguaradado) response.status(201).json({ message: "Carrito creado", cart: productoguaradado});
+
     } catch (error) {
         response.status(500).send("No se puede agregar este producto"); 
     }
+
 });
 
 cartRouter.post("/:cid/product/:pid", async (request, response) => {

@@ -134,38 +134,41 @@ export class ProductManager {
     }
     // DB -------------------------------------------
     async addProductFT(newProduct){
+        console.log(newProduct)
         try{
             const filter = {
                 $or:[
-                    { code: newProduct.code },
+                    { title: newProduct.title },
                 ]
             }
 
-            const theProductExists = ProductModel.find(filter)
-            if(theProductExists)  throw new Error(`ya exite ese producto`)
-
-            const keysProduct = ["title", "description", "price", "img", "code", "stock", "category", "status"]
+            const theProductExists =await ProductModel.findOne(filter)
+            if(theProductExists) throw new Error(`Product title already exists`)
+            const keysProduct = ["title"]
             const keysNewProduct = Object.keys(newProduct)
-            if(!JSON.stringify(keysProduct) == JSON.stringify(keysNewProduct)) throw new Error("Todos los datos son obligatorios")
+        
+            if (JSON.stringify(keysProduct) !== JSON.stringify(keysNewProduct)) {
+                throw new Error("The product must include 'title'");
+            }
 
             return await ProductModel.create(newProduct)
 
         }catch(error){
-            console.log(error)
+            throw new Error(error)
         }
 
     }
+
     async updateProduct(newValues, idProduct){
         try{
             await this.getProducts();
             let product = await this.getProductById(idProduct)
-            const { title, description, price, img, code, stock } = newValues
+            const { title, photo, category, price, stock } = newValues
             const changeProduct = {
                 title,
-                description,
+                photo,
+                category,
                 price,
-                img,
-                code,
                 stock,
             }
             const valueChangeProduct = Object.entries(changeProduct)
@@ -181,6 +184,25 @@ export class ProductManager {
             console.log(error)
         }
     }
+    async updateProductFT(idProduct, newValues) {
+    try {
+        const product = await ProductModel.findById(idProduct);
+        if (!product) throw new Error("Product not found");
+
+        const validUpdates = {};
+        for (const key in newValues) {
+            if (newValues[key] !== undefined) {
+                validUpdates[key] = newValues[key];
+            }
+        }
+
+        const updatedProduct = await ProductModel.findByIdAndUpdate(idProduct, validUpdates, { new: true });
+        return updatedProduct;
+
+    } catch (error) {
+        throw new Error(error);
+    }
+}
     async delateProduct(idProduct){
         try{
             const productToRemove = await this.getProductById(idProduct)
@@ -188,6 +210,19 @@ export class ProductManager {
             await this.saveFile()
         }catch(error){
             console.log(error)
+        }
+    }
+    async deleteProductFT(idProduct) {
+        try {
+            const deletedProduct = await ProductModel.findByIdAndDelete(idProduct);
+            
+            if (!deletedProduct) {
+                throw new Error("Product not found");
+            }
+    
+            return deletedProduct;
+        } catch (error) {
+            throw new Error(error);
         }
     }
 

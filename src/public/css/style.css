@@ -1,61 +1,69 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-html{
+
+html {
     font-size: 100%;
     font-family: "Montserrat", serif;
 }
-header{
+
+header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-body{
+
+body {
     /* height: 100vh; */
     padding: 1rem;
     display: flex;
     gap: 2rem;
     flex-direction: column;
 }
-main{
+
+main {
     display: flex;
     gap: 2rem;
     flex-direction: column;
     height: inherit;
     justify-content: space-between;
 }
-footer{
+
+footer {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
-.pageContainer{
+
+.pageContainer {
     display: flex;
     gap: 16px;
 }
-ul{
+
+ul {
     display: grid;
     gap: .625rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-li{
+
+li {
     font-family: "Roboto", sans-serif;
     list-style-type: none;
-    color: red;
-    border: red solid .0625rem;
     padding: 1rem;
     display: flex;
     gap: 8px;
     flex-direction: column;
     justify-content: space-between;
 }
+
 form {
     width: 100%;
 }
-button{
+
+button {
     width: 100%;
     padding: 8px;
     border-radius: 32px;
@@ -63,22 +71,27 @@ button{
     border: solid 1px red;
     cursor: pointer;
 }
-button:hover{
+
+button:hover {
     background: red;
-    color:white;
+    color: white;
     font-weight: 500;
 }
-.shoppingCart{
+
+.shoppingCart {
     display: flex;
     flex-direction: column;
 }
-.shoppingCart__product, .shoppingCart__sections{
+
+.shoppingCart__product,
+.shoppingCart__sections {
     display: grid;
     grid-template-columns: 50% 24% 22%;
     grid-row: 1fr;
     gap: .625rem;
 }
-.shoppingCart__sections div{
+
+.shoppingCart__sections div {
     padding: 1rem;
 }
 
@@ -210,3 +223,101 @@ button:hover{
     background-color: #0056b3;
 }
 
+/* home */
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #007bff;
+    color: white;
+}
+
+.cart-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Lista de productos */
+.products-container {
+    padding: 20px;
+}
+
+.product-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product-item {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-item h3 {
+    margin: 0 0 5px 0;
+}
+
+/* Botón agregar */
+.btnAddProduct {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.btnAddProduct:hover {
+    background: #0056b3;
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.pagination-link {
+    text-decoration: none;
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.pagination-link:hover {
+    background: #0056b3;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background: #0056b3;
+    color: white;
+}
+
+
+/*------*/
+.header-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

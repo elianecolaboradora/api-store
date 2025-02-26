@@ -1,5 +1,4 @@
 const socket = io()
-
 const btnAddProduct = document.getElementById("addNewProduct")
 const allProductsContainer = document.getElementById("allProductsContainer")
 const nameProduct = document.getElementById("name")

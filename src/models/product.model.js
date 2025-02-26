@@ -6,36 +6,31 @@ const productSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    description: {
+    photo: {
         type: String,
-        require: true
-    },
-    price: {
-        type: Number,
-        require: true
-    },
-    img:{
-        type: String
-    },
-    code: {
-        type: String,
-        require: true
-    },
-    stock: {
-        type: Number,
-        require: true
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-66aQDAgas1fy6b-MQTe1aQx9ExPRWsGXiw&s"
     },
     category: {
         type: String,
-        required: true
+        default: "General",
+        enum: ["General", "Abarrotes", "Hogar", "Electrónica", "Moda"]  
     },
-    status: {
-        type: Boolean,
-        required: true
+    price: {
+        type: Number,
+        default: 1
     },
+    stock: {
+        type: Number,
+        default: 1
+    },
+    state: {
+        type: String,
+        default: "reserved",
+        enum: ["reserved", "paid", "delivered"]  
+    }
 })
 productSchema.plugin(mongoosePaginate)
 
-const ProductModel = mongoose.model("products", productSchema)
+const ProductModel = mongoose.model("Products", productSchema)
 
 export {ProductModel}

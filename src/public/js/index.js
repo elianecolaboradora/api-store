@@ -1,60 +1,28 @@
-const btnAddProduct = document.querySelectorAll(".btnAddProduct")
-const shoppingCart = document.querySelector("#shoppingCart")
+const btnSignOut = document.querySelector(".header-singout")
+console.log(btnSignOut)
+async function signOut(){
+    try {
+        const options = {
+            method: "POST",
+            credentials: "include", // Para enviar cookies al backend
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
 
-async function createCart () {
-    const options = {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            "products":[]
-        }),
-    };
-    const response = await fetch('http://localhost:8080/api/carts',options)
-    return await response.text()
-}
-async function addProductoToCart(cartId,productId) {
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    const response = await fetch(`/api/carts/${cartId}/product/${productId}`,options)
-    return await response.json()
-}
+        const response = await fetch('/api/auth/signout', options);
 
-btnAddProduct.forEach((btn)=>{
-    btn.addEventListener("click", async()=>{
-
-        if(!localStorage.getItem("IDCART")){
-            const IDCART = await createCart()
-            localStorage.setItem("IDCART", IDCART);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
-        const productId = btn.dataset.product
-        const cartId = localStorage.getItem("IDCART")
-        shoppingCart.href = `/api/carts/${cartId}`
 
-        return await addProductoToCart(cartId,productId)
-    })
-})
+        const data = await response.json();
 
-shoppingCart.addEventListener("click", async()=>{
+        location.replace("/api/auth/login")
 
-    if(!shoppingCart.href){
-        if(!localStorage.getItem("IDCART")){
-            const IDCART = await createCart()
-            localStorage.setItem("IDCART", IDCART);
-            const cartId = localStorage.getItem("IDCART")
-            shoppingCart.href = `/api/carts/${cartId}`
-        }
+    } catch (error) {
+        console.error("Error al cerrar sesión:", error);
     }
-})
-window.addEventListener("load", ()=>{
-    if(localStorage.getItem("IDCART")){
-        const cartId = localStorage.getItem("IDCART")
-        shoppingCart.href = `/api/carts/${cartId}`
-    }
-})
+}
+
+btnSignOut.addEventListener("click", signOut)

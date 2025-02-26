@@ -20,10 +20,12 @@ export class CartManager{
             console.log(`Error: ${error}`);
         }
     }
-    async addCartFT(){
+    async addCartFT(user_id){
         try{
+            console.log("addCartFT"+ user_id)
             return await CartModel.create({
-                products:[]
+                products:[],
+                user_id
             })
         }catch(error){
             console.log(error)

@@ -1,1 +1,4 @@
-MONGODB_URI="mongodb+srv://<username>:<db_password>@cluster0.ojccx.mongodb.net/<database>?retryWrites=true&w=majority&appName=Cluster0"
+MONGODB_URI="mongodb+srv://<db_username>:<db_password>@cluster0.ojccx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+JWT_KEY="JWT_KEY-KEY"
+COOKIE_KEY= "COOKIE_KEY"
+SESSION_KEY = "SESSION_KEY"

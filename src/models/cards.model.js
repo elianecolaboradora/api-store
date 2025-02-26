@@ -5,15 +5,24 @@ const cardSchema = new mongoose.Schema({
         {
             product:{
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "products",
+                ref: "Products",
                 require: true,
             },
             quantity: {
                 type: Number,
                 require: true,
-            }
+            },
+
         }
-    ]
+    ],
+    user_id:{
+        type: String,
+        require: true
+    },
+    state:{
+        type: String,
+        default: "reserved", enum: ["reserved", "paid", "delivered"]  
+    }
 },{ versionKey: false })
 
 cardSchema.pre("findOne", function(next){
@@ -21,6 +30,6 @@ cardSchema.pre("findOne", function(next){
     next()
 })
 
-const CartModel = mongoose.model("cards", cardSchema)
+const CartModel = mongoose.model("Carts", cardSchema)
 
 export {CartModel}

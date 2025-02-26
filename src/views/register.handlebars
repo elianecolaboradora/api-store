@@ -1,32 +1,29 @@
 <main class="register-container">
-  <section class="register-box">
-    <header>
-      <h1 class="register-title">REGISTER FORM</h1>
-    </header>
-    <form class="register-form">
-      <fieldset class="register-group">
-        <label for="nickname">Nickname</label>
-        <input class="register-input" type="text" name="nickname" id="nickname" placeholder="Enter your nickname" required />
-      </fieldset>
+	<section class="register-box">
+		<header>
+			<h1 class="register-title">REGISTER FORM</h1>
+		</header>
+		<form class="register-form">
+			<fieldset class="register-group">
+				<label for="email">Email</label>
+				<input class="register-input" type="email" name="email" id="email" placeholder="Enter your email"
+					required />
+			</fieldset>
 
-      <fieldset class="register-group">
-        <label for="email">Email</label>
-        <input class="register-input" type="email" name="email" id="email" placeholder="Enter your email" required />
-      </fieldset>
+			<fieldset class="register-group">
+				<label for="password">Password</label>
+				<input class="register-input" type="password" name="password" id="password"
+					placeholder="Enter your password" required />
+			</fieldset>
 
-      <fieldset class="register-group">
-        <label for="password">Password</label>
-        <input class="register-input" type="password" name="password" id="password" placeholder="Enter your password" required />
-      </fieldset>
+			<fieldset class="register-group">
+				<label for="photo">Profile Picture (URL)</label>
+				<input class="register-input" type="url" name="photo" id="photo" placeholder="Enter image URL" />
+			</fieldset>
 
-      <fieldset class="register-group">
-        <label for="avatar">Profile Picture (URL)</label>
-        <input class="register-input" type="url" name="avatar" id="avatar" placeholder="Enter image URL" />
-      </fieldset>
-
-      <button class="register-button" id="register" type="submit">REGISTER!</button>
-    </form>
-  </section>
+			<button class="register-button" id="register" type="submit">REGISTER!</button>
+		</form>
+	</section>
 </main>
 
-<script src="js/register.js"></script>
+<script src="/js/register.js"></script>
