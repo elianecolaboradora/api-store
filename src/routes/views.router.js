@@ -1,8 +1,23 @@
 import { Router } from "express";
 import { ProductManager } from "../services/ProductManager.js";
+import { productsService } from "../services/product.service.js";
 
 const viewsRouter = Router()
-const productManager = new ProductManager()
+
+const renderLogin = (req, res) => res.render("index")
+const renderRegister = (req, res) => res.render("register")
+const renderverifyCode = (req, res) => res.render("verifyCode")
+const renderProducts = (req, res) => res.render("products")
+
+
+viewsRouter.get("/", renderLogin)
+viewsRouter.get("/register", renderRegister)
+viewsRouter.get("/verifyCode", renderverifyCode)
+viewsRouter.get("/products", renderProducts)
+/* viewsRouter.get("/test", (req, res) => {
+    res.render("index", { message: "Hola, Handlebars funciona!" });
+});
+
 viewsRouter.get("/products", async (request, response) => {
     try {
 
@@ -11,7 +26,7 @@ viewsRouter.get("/products", async (request, response) => {
         const sort = request.query.sort;
         const query = request.query.query;
 
-        const result = await productManager.getProductsFT({ limit, page, sort, query });
+        const result = await productsService.readAllProducts({ limit, page, sort, query });
 
         response.render("index",{
             status: result.status,
@@ -37,26 +52,14 @@ viewsRouter.get("/products", async (request, response) => {
 viewsRouter.get("/products/:pid", async (request, response) => {
     try {
         const { pid } = request.params;
-        const product = await productManager.getProductByIdFT(pid);
+        const product = await productsService.readOneProduct(pid);
         response.render('productDetail', { product });
     } catch (error) {
         response.status(500).send("Error loading product details");
     }
 
 
-})
+}) */
 
-viewsRouter.get("/realtimeproducts", async (req, res) => {
-
-    try{
-        const products = await productManager.getProducts();
-        res.render("realtimeproducts", {products});
-
-
-    }catch(error){
-        console.log(error)
-    }
-
-})
 
 export { viewsRouter }

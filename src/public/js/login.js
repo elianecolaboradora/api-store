@@ -1,15 +1,16 @@
 const loginBtn = document.getElementById("login-button")
-const inputPassword = document.querySelector("#email")
-const inputEmail = document.querySelector("#password")
+const inputPassword = document.querySelector("#password")
+const inputEmail = document.querySelector("#email")
 
 loginBtn.addEventListener("click", async (e) => {
     e.preventDefault()
     try {
 
 		const data = {
-			email: document.querySelector("#email").value,
-			password: document.querySelector("#password").value,
+			email: inputEmail.value,
+			password: inputPassword.value,
 		};
+		console.log(data)
 		const opts = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -22,7 +23,7 @@ loginBtn.addEventListener("click", async (e) => {
 		if (response.error) {
 			alert(response.error);
 		} else {
-			location.replace("/products");
+			location.replace("api/products");
 		}
 	
     } catch (error) {

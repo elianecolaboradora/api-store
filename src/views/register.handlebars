@@ -16,14 +16,24 @@
 					placeholder="Enter your password" required />
 			</fieldset>
 
-			<fieldset class="register-group">
-				<label for="photo">Profile Picture (URL)</label>
-				<input class="register-input" type="url" name="photo" id="photo" placeholder="Enter image URL" />
-			</fieldset>
-
 			<button class="register-button" id="register" type="submit">REGISTER!</button>
 		</form>
 	</section>
+	<div class="background-verify verify_close">
+		<section class="verify-box">
+			<header>
+				<h1 class="verify-title">VERIFY ACCOUNT</h1>
+			</header>
+			<form class="verify-form">
+				<div class="verify-group">
+					<label for="verification-code">Verification Code</label>
+					<input class="verify-input" type="text" name="verification-code" id="verification-code"
+						placeholder="Enter your code" required />
+				</div>
+				<button class="verify-button" id="verify-button" type="submit">VERIFY</button>
+			</form>
+		</section>
+	</div>
 </main>
 
 <script src="/js/register.js"></script>

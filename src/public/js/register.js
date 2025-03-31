@@ -1,60 +1,69 @@
 const btnRegister = document.getElementById("register")
 const inputPassword = document.getElementById("password")
 const inputEmail = document.getElementById("email")
-const inputPhoto  = document.getElementById("photo")
-
+const btnVerify = document.getElementById("verify-button")
+const boxVerify = document.querySelector(".background-verify")
+const inputverify = document.querySelector(".verify-input")
+/* const inputPhoto  = document.getElementById("photo")
+ *//* 
+console.log(inputEmail)
 async function createCart(data) {
-    try {
-        const opts = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        };
-        let response = await fetch("/api/carts", opts);
-    
-        if (!response.ok) {
-            let text = await response.text();
-            throw new Error("Error en createCart:", text);
-        }
-    
-        response = await response.json();
-        return response;
-    } catch (error) {
-        throw new Error(error)
-    }
+   try {
+       const opts = {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(data),
+       };
+       let response = await fetch("/api/cart", opts);
+   
+       if (!response.ok) {
+           let text = await response.text();
+           throw new Error("Error en createCart:", text);
+       }
+   
+       response = await response.json();
+       return response;
+   } catch (error) {
+       throw new Error(error)
+   }
 
+} */
+async function verifyCode(e) {
+    e.preventDefault();
+
+    const dataVerify = {
+        email: inputEmail.value,
+        code: inputverify.value,
+    };
+
+    const opts = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataVerify),
+    };
+
+    await fetch("/api/auth/verify", opts);
+    location.replace("/")
 }
-
 async function registerUser(e) {
 
     e.preventDefault();
     try {
-        const data = {
+        const dataRegister = {
             email: inputEmail.value,
             password: inputPassword.value,
         };
-        if(inputPhoto.value) data.photo = inputPhoto.value
 
+        console.log(dataRegister)
         const opts = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            body: JSON.stringify(dataRegister),
         };
-    
-        let registryResponse = await fetch("/api/auth/register", opts);
-        if (!registryResponse.ok) {
-            let text = await registryResponse.json();
-            throw new Error("Error al regsitrar el usuario:", text.error);
-        }
 
-        registryResponse = await registryResponse.json();
+        boxVerify.classList.remove("verify_close")
+        await fetch("/api/auth/register", opts);
 
-        await createCart({
-            user_id: registryResponse._id
-        });
-
-        location.replace("/api/auth/login")
-        
     } catch (error) {
         throw new Error(error);
     }
@@ -62,3 +71,4 @@ async function registerUser(e) {
 }
 
 btnRegister.addEventListener("click", registerUser)
+btnVerify.addEventListener("click", verifyCode)

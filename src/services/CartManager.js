@@ -1,5 +1,5 @@
 
-import { CartModel } from "../models/cards.model.js";
+import { CartModel } from "../data/models/cards.model.js";
 
 
 export class CartManager{
@@ -59,13 +59,7 @@ export class CartManager{
         try {
             const deleteCart = await CartModel.findByIdAndUpdate(
                 idCart,
-                {
-                    $pull: {
-                        products: {
-                            product: idProduct
-                        }
-                    }
-                },
+                { $pull: { products: { product: idProduct } } },
                 { new: true }
             ).populate("products.product");
             if (!deleteCart) throw new Error("Carrito no encontrado");
@@ -90,8 +84,6 @@ export class CartManager{
     }
     async updateProductQuantity(idCart, idProduct, newQuantity) {
         try {
-
-
             if (newQuantity < 1) throw new Error("La cantidad debe ser al menos 1");
 
             const cart = await CartModel.findById(idCart);

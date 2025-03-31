@@ -1,43 +1,24 @@
-<header class="header">
-    <h1>Productos</h1>
-    <div class="header-section">
-        <a id="shoppingCart" href="/cart" role="button" class="cart-link">Carrito</a>
-        <button class="header-singout">Cerrar sesión<p>
-    </div>
-</header>
-
-<main class="products-container">
-    {{#if payload.length}}
-        <section class="product-list">
-            <ul>
-                {{#each payload}}
-                    <li class="product-item">
-                        <h3>{{title}}</h3>
-                        <p><strong>Descripción:</strong> {{description}}</p>
-                        <p><strong>Precio:</strong> ${{price}}</p>
-                        <p><strong>Stock:</strong> {{stock}}</p>
-                        <p><strong>Categoría:</strong> {{category}}</p>
-                        <a href="/products/{{_id}}" class="details-link">Ver detalles</a>
-                        <button class="btnAddProduct" data-product="{{_id}}" type="button">Agregar</button>
-                    </li>
-                {{/each}}
-            </ul>
-        </section>
-    {{else}}
-        <p class="no-products">No hay productos disponibles</p>
-    {{/if}}
+<main class="login-container">
+    <section class="login-box">
+        <header>
+            <h1 class="login-title">LOGIN FORM</h1>
+        </header>
+        <form class="login-form">
+            <div class="login-group">
+                <label for="email">Email</label>
+                <input class="login-input" type="email" name="email" id="email" placeholder="Enter your email"
+                    required />
+            </div>
+            <div class="login-group">
+                <label for="password">Password</label>
+                <input class="login-input" type="password" name="password" id="password"
+                    placeholder="Enter your password" required />
+            </div>
+            <button class="login-button" id="login-button" type="submit">LOGIN!</button>
+        </form>
+        <div class="register-redirect">
+            <p>Don't have an account? <a href="/register">Sign up here</a></p>
+        </div>
+    </section>
 </main>
-
-<footer class="footer">
-    <p>Estás en página <strong>{{page}}</strong> de <strong>{{totalPages}}</strong></p>
-    <nav class="pagination">
-        {{#if hasPrevPage}}
-            <a href="{{prevLink}}" class="pagination-link">Anterior</a>
-        {{/if}}
-        {{#if hasNextPage}}
-            <a href="{{nextLink}}" class="pagination-link">Siguiente</a>
-        {{/if}}
-    </nav>
-</footer>
-
-<script src="js/index.js"></script>
+<script src="/js/login.js"></script>

@@ -1,14 +1,66 @@
 import fs from "node:fs/promises";
-import { ProductModel } from "../models/product.model.js";
+import { ProductModel } from "../data/models/product.model.js";
 const __dirname = import.meta.dirname;
 
 export class ProductManager {
-    constructor(){
-        this.products = []
-        this.path = __dirname + "/data/products.json";
-    }
-    async saveFile() {
-        await fs.writeFile(this.path, JSON.stringify(this.products));
+    getProductsFT = async ({ limit = 10, page = 1, sort, query })=>{
+        try {
+
+            const filter = query
+            ?
+            {
+                $or: [
+                    { status: query },
+                    { category: query }
+                ]
+            }
+            : {};
+
+            const sortOption = sort === 'asc' ? 1 : sort === 'desc' ? -1 : null;
+            const productsQuery = ProductModel.find(filter).lean();
+
+            if (sortOption) productsQuery.sort({ price: sortOption })
+
+            const products = await productsQuery
+                .limit(limit)
+                .skip((page - 1) * limit)
+                .exec();
+
+            function createURL(prevOrNext) {
+                let URL =`/products?limit=${limit}&page=${prevOrNext}`
+                if(!sort && !query) URL
+                else if(!sort) URL + `&query=${query}`
+                else if(!query) URL + `&sort=${sort}`
+                else URL + `&sort=${sort}&query=${query}`
+                return URL
+            }
+
+            const totalProducts = await ProductModel.countDocuments(filter);
+            const totalPages = Math.ceil(totalProducts / limit);
+            const hasPrevPage = page > 1;
+            const hasNextPage = page < totalPages;
+            const prevPage = hasPrevPage ? page - 1 : null;
+            const nextPage = hasNextPage ? page + 1 : null;
+            const prevLink = hasPrevPage ? createURL(prevPage) : null;
+            const nextLink = hasNextPage ? createURL(nextPage) : null;
+
+            return {
+                status: 'success',
+                payload: products,
+                totalPages,
+                prevPage,
+                nextPage,
+                page,
+                hasPrevPage,
+                hasNextPage,
+                prevLink,
+                nextLink
+            };
+
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error al obtener productos: ${error.message}`);
+        }
     }
     async getProductsFT({ limit = 10, page = 1, sort, query }) {
         try {
