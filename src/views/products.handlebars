@@ -1,0 +1,41 @@
+<header class="header">
+    <h1>Productos</h1>
+    <div class="header-section">
+        <button class="header-singout">Cerrar sesión<p>
+    </div>
+</header>
+
+<main class="products-container">
+    {{#if payload.length}}
+        <section class="product-list">
+            <ul>
+                {{#each payload}}
+                    <li class="product-item">
+                        <h3>{{title}}</h3>
+                        <p><strong>Descripción:</strong> {{description}}</p>
+                        <p><strong>Precio:</strong> ${{price}}</p>
+                        <p><strong>Stock:</strong> {{stock}}</p>
+                        <p><strong>Categoría:</strong> {{category}}</p>
+
+                    </li>
+                {{/each}}
+            </ul>
+        </section>
+    {{else}}
+        <p class="no-products">No hay productos disponibles</p>
+    {{/if}}
+</main>
+
+{{!-- <footer class="footer">
+    <p>Estás en página <strong>{{page}}</strong> de <strong>{{totalPages}}</strong></p>
+    <nav class="pagination">
+        {{#if hasPrevPage}}
+            <a href="{{prevLink}}" class="pagination-link">Anterior</a>
+        {{/if}}
+        {{#if hasNextPage}}
+            <a href="{{nextLink}}" class="pagination-link">Siguiente</a>
+        {{/if}}
+    </nav>
+</footer> --}}
+
+<script src="/js/products.js"></script>
